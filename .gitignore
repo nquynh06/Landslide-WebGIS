@@ -1,0 +1,47 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+dist/
+build/
+.vite/
+
+# GIS data - large files
+*.tif
+*.tiff
+*.vrt
+*.gpkg
+*.gdb/
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.qix
+*.aux.xml
+*.ovr
+
+# Temporary and backup files
+*.tmp
+*.log
+*.bak
+*.backup
+*.swp
+.DS_Store
+Thumbs.db
+
+# QGIS backup
+*.qgz~
+*.qgs~
