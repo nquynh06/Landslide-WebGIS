@@ -1,15 +1,15 @@
 
-dataset_id,dataset_name,category,source,format,crs,resolution,processing_status,local_path,intended_use
-D001,study_area_4_provinces,Study Area,Administrative boundary,GeoJSON,EPSG:4326,Vector,Processed,01_raw_data/01_study_area/,Study area boundary
-D002,dem_4provinces_utm48_250m,Terrain,NASADEM,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Elevation factor
-D003,slope_4provinces_utm48_250m,Terrain,Derived from DEM,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Slope factor
-D004,GLiM_4provinces,Geology,GLiM,GeoPackage,EPSG:32648,Vector,Processed,02_processed_data/,Geology factor
-D005,WorldCover_4provinces,Land Cover,ESA WorldCover,GeoTIFF,EPSG:32648,250m,To verify,02_processed_data/,Land cover factor
-D006,SoilGrids_clay_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D007,SoilGrids_sand_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D008,SoilGrids_silt_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D009,SoilGrids_soc_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D010,SoilGrids_bdod_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D011,SoilGrids_cfvo_15-30cm,Soil,SoilGrids,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Soil property
-D012,distance_roads_250m_corrected,Transportation,OpenStreetMap,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Distance to roads
-D013,distance_rivers_250m_corrected,Hydrology,OpenStreetMap,GeoTIFF,EPSG:32648,250m,Processed,02_processed_data/,Distance to waterways
+dataset_id,dataset_name,source,category,original_format,processed_format,crs,resolution,processing_status,license,local_path,notes
+D001,study_area_4_provinces,Administrative boundary,Boundary,GeoJSON,GeoJSON,EPSG:4326,Vector,Processed,To verify,01_raw_data/01_study_area/,Study area boundary
+D002,dem_4provinces_utm48_250m,NASADEM,Terrain,DEM,GeoTIFF,EPSG:32648,250m,Processed,See source terms,02_processed_data/,Analysis DEM
+D003,slope_4provinces_utm48_250m,Derived from DEM,Terrain,Raster,GeoTIFF,EPSG:32648,250m,Processed,Derived,02_processed_data/,Slope in degrees
+D004,GLiM_4provinces,GLiM,Geology,File Geodatabase,GeoPackage,To verify,Vector,Processed,See source terms,02_processed_data/,Lithology polygons
+D005,WorldCover_4provinces,ESA WorldCover,Land Cover,GeoTIFF,GeoTIFF,To verify,250m,To verify,See source terms,02_processed_data/,Check aggregation method
+D006,SoilGrids_clay_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D007,SoilGrids_sand_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D008,SoilGrids_silt_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D009,SoilGrids_soc_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D010,SoilGrids_bdod_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D011,SoilGrids_cfvo_15-30cm_utm48_250m,SoilGrids,Soil,GeoTIFF,GeoTIFF,EPSG:32648,250m,Processed,CC BY 4.0,02_processed_data/,Verify units and scale
+D012,distance_roads_250m_corrected,OSM,Transportation,Vector,GeoTIFF,EPSG:32648,250m,Processed,ODbL,02_processed_data/,Euclidean distance
+D013,distance_rivers_250m_corrected,OSM,Hydrology,Vector,GeoTIFF,EPSG:32648,250m,Processed,ODbL,02_processed_data/,Euclidean distance
