@@ -21,3 +21,12 @@ This directory contains the technical documentation of the Landslide-WebGIS proj
 - Record the source of datasets and analytical criteria.
 - Update documents whenever the implementation changes.
 - Ensure that GIS, database, backend, and frontend documentation use consistent terminology.
+
+
+## Database and Backend
+
+- [Database Design](database_design.md)
+- [API Specification](api_specification.md)
+- [Backend Development Guide](backend_development.md)
+- [GIS–Backend Integration Contract](integration_contract.md)
+- [Backend & Database Task Assignment](backend_db_task_assignment.md)
