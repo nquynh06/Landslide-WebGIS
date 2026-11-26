@@ -1,5 +1,6 @@
--- Development only. Negative IDs are reserved for synthetic fixtures.
+-- Run as postgres after schema.sql. Negative IDs are reserved for development fixtures.
 BEGIN;
+SET LOCAL search_path TO public;
 INSERT INTO study_areas (name, area_type) VALUES
   ('Lai Châu', 'province'), ('Điện Biên', 'province'),
   ('Sơn La', 'province'), ('Yên Bái', 'province'),

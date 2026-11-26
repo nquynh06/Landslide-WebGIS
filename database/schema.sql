@@ -1,5 +1,9 @@
--- Baseline 0001. Run as landslide_owner after enabling PostGIS (see README.md).
+-- Run once on an empty application database as postgres.
+-- In pgAdmin, open a fresh Query Tool if a previous transaction failed (25P02).
 BEGIN;
+SET LOCAL search_path TO public;
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 CREATE TABLE study_areas (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -146,5 +150,14 @@ CREATE TABLE alert_rainfall_records (
 
 CREATE INDEX ix_alert_rainfall_records_rainfall_record_id ON alert_rainfall_records (rainfall_record_id);
 
-GRANT SELECT ON study_areas, data_sources, gis_layers, rubric_criteria, susceptibility_maps, landslide_events, rainfall_records, alerts, gis_layer_study_areas, alert_rainfall_records TO landslide_user;
+-- Installations with a separate API login retain read-only access.
+DO $$
+BEGIN
+    IF to_regrole('landslide_user') IS NOT NULL THEN
+        GRANT SELECT ON study_areas, data_sources, gis_layers, rubric_criteria,
+            susceptibility_maps, landslide_events, rainfall_records, alerts,
+            gis_layer_study_areas, alert_rainfall_records TO landslide_user;
+    END IF;
+END;
+$$;
 COMMIT;

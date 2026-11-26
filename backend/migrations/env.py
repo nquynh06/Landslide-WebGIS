@@ -1,20 +1,21 @@
 from alembic import context
-from sqlalchemy import create_engine, pool, text
+from sqlalchemy import create_engine, make_url, pool, text
 
 from app.core.config import settings
 from app.models import Base
 
 
-url = settings.migration_database_url or settings.database_url
+url = (make_url(settings.migration_database_url.get_secret_value())
+       if settings.migration_database_url else settings.connection_url)
 options = dict(target_metadata=Base.metadata, compare_type=True)
 
 if context.is_offline_mode():
-    context.configure(url=url.get_secret_value(), literal_binds=True, **options)
+    context.configure(url=url, literal_binds=True, **options)
     with context.begin_transaction():
         context.run_migrations()
 else:
     engine = create_engine(
-        url.get_secret_value(), poolclass=pool.NullPool,
+        url, poolclass=pool.NullPool,
         connect_args={"options": "-c search_path=public"},
     )
     with engine.connect() as connection:

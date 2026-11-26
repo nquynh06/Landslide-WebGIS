@@ -12,10 +12,8 @@ from app.main import app
 @pytest.fixture(scope="session")
 def test_engine():
     dsn = settings.test_database_url
-    if dsn is None:
-        pytest.fail("Set TEST_DATABASE_URL to the seeded PostGIS test database.")
-    url = make_url(dsn.get_secret_value())
-    app_db = make_url(settings.database_url.get_secret_value())
+    app_db = settings.connection_url
+    url = make_url(dsn.get_secret_value()) if dsn else app_db.set(database=f"{app_db.database}_test")
     if not (url.database or "").endswith("_test") or url.database == app_db.database:
         pytest.fail("TEST_DATABASE_URL must name a separate database ending in _test.")
     engine = create_engine(url, connect_args={"options": "-c timezone=UTC"})
