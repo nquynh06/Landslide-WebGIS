@@ -6,6 +6,16 @@
 
 **Cách dùng.** Theo bốn milestone của bản phân công. Từng ô dưới đây là một đầu việc có thể kiểm tra. Khi thực hiện bằng agent, có thể dùng `superpowers:executing-plans` để triển khai tuần tự. [Bản phân công gốc](../../backend_db_task_assignment.md) · [Thiết kế DB](../../database_design.md) · [Đặc tả API](../../api_specification.md) · [Hướng dẫn backend](../../backend_development.md) · [Hợp đồng bàn giao GIS](../../integration_contract.md)
 
+## Kết quả triển khai ngày 26/11/2026
+
+| Mốc | Kết quả trong nhánh `backend-db` |
+|---|---|
+| M1 | Dựng `landslide_webgis` bằng Alembic và `landslide_webgis_test` bằng SQL trên PostgreSQL 17.5/PostGIS 3.5.2. DDL của 10 bảng, sequences, index, ràng buộc và quyền đọc trùng nhau. Seed chạy lại không thêm bản ghi. [Hướng dẫn dựng DB](../../../database/README.md) |
+| M2 | Đã triển khai đủ 11 GET API và kiểm tra HTTP qua Uvicorn với role ứng dụng. Có bộ test trên PostGIS, OpenAPI, Swagger và ReDoc. [Hướng dẫn chạy backend](../../../backend/README.md) |
+| M3 và M4 | M3 chờ bàn giao GIS. M4 chờ lựa chọn nguồn mưa và phê duyệt phương pháp cảnh báo. |
+
+Bước phối hợp còn lại là để một thành viên khác dựng lại theo README và xác nhận hợp đồng với frontend/GIS. Bốn tỉnh và vùng tổng hợp trong seed chỉ phục vụ bản demo hiện tại.
+
 ## Điểm xuất phát ngày 25/11/2026
 
 | Bằng chứng trong workspace | Hệ quả đối với công việc |

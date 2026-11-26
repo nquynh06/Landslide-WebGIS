@@ -432,3 +432,15 @@ Each endpoint should have:
 5. Keep the API version prefix `/api/v1`.
 6. Maintain consistent response schemas and datetime formats.
 7. Document any changes to this API contract before frontend integration.
+
+## 8. Implemented M2 contract
+
+The eleven initial GET operations are available under `/api/v1`. The map display endpoint `/susceptibility-maps/{map_id}/map-info` is scheduled for M3 after GIS handover.
+
+- Resource responses use `{"data": ...}`. All six lists support `page` (1–2147483647, default 1) and `page_size` (1–100, default 20). A page past the last item returns an empty array.
+- Study areas, layers and maps sort by ascending ID. Events, rainfall and alerts sort by descending event date, valid time and issue time respectively, then ascending ID. Undated events sort last.
+- Time filters accept ISO 8601 timestamps with an explicit offset, including Z. The start is inclusive, the end exclusive. If both are present, start must precede end. Event dates are interpreted at midnight UTC. Undated events appear only in queries without a time bound. Rainfall filtering uses `observed_at`, which is the valid time for both observations and forecasts.
+- Filter names are listed in section 3. The map's study area identifies its registered extent, which may be a multi-province region. Layers can be filtered by any linked study area.
+- Unknown detail IDs return 404 with `detail.code=RESOURCE_NOT_FOUND`. Parameter validation returns the default FastAPI 422 response. Database unavailability returns 503 with `detail.code=DATABASE_UNAVAILABLE`.
+- Study area detail returns metadata. The draft map detail includes a nullable legend. Alert detail adds `trigger_reason` and `rainfall_records`. Public schemas omit storage paths and geometries in M2.
+- In the development seed, four provinces have generated positive IDs. The sample map, layer, event and alert each use ID -1 in their respective tables. Rainfall -1 is an observation and -2 is a forecast. A sample alert links to both to exercise the detail contract.
