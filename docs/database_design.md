@@ -228,3 +228,14 @@ Spatial indexes support efficient spatial queries such as finding landslide even
 - The alert-to-rainfall relationship may require a junction table.
 - User accounts and role-based access control may be added if the application requires user management.
 - Automated GIS processing history may be added in a future version.
+
+## 9. Implemented M1 baseline (revision 0001)
+
+| Relation | Columns and constraints | Purpose |
+|---|---|---|
+| `gis_layer_study_areas` | PK `(layer_id, study_area_id)`, both columns foreign keys | A single GIS layer covers several provinces. The layers API filters using this association. |
+| `alert_rainfall_records` | PK `(alert_id, rainfall_record_id)`, both columns foreign keys | One alert can cite several rainfall records. Its detail endpoint returns each linked record. |
+
+The second column of each association has a reverse lookup index. Baseline geometry columns have GiST indexes. The development seed creates four province rows and one `study_region` for the sample map covering all four provinces. Area type and name identify a study area. Within one study area, map name and version identify a map release. Boundaries and event dates may be null until verified. Development fixtures reserve negative IDs and belong only in development or test databases.
+
+The M2 application role has SELECT on the ten application tables. The migration role owns the schema objects. The baseline and subsequent revisions live under `backend/migrations/`. [Setup and verification](../database/README.md)
