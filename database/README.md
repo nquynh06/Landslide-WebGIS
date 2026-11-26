@@ -5,16 +5,22 @@
 ## Dựng database bằng pgAdmin 4
 
 1. **Kết nối PostgreSQL.** Trong **Servers**, mở máy chủ local và đăng nhập bằng `postgres`. Nếu chưa có kết nối, chọn **Register → Server…**, đặt tên tùy ý và điền trong tab **Connection**: host `localhost`, port `5432`, maintenance database `postgres`, username `postgres` và mật khẩu trên máy.
-2. **Chọn database.** Mở `landslide_webgis`. Nếu chưa có, nhấp phải **Databases → Create → Database…**, nhập `landslide_webgis`, chọn **Owner** là `postgres`, rồi **Save**.
-3. **Tạo bảng.** Mở **Query Tool mới** trên `landslide_webgis` bằng `postgres`. Trên DB chưa có bảng ứng dụng, dùng **Open File** (`Ctrl+O`) mở `database/schema.sql`, rồi nhấn **F5** để chạy toàn bộ file. Script bật PostGIS và tạo 10 bảng trong schema `public`. Nếu máy chủ báo `extension "postgis" is not available`, cài gói PostGIS tương ứng với phiên bản PostgreSQL rồi chạy lại trong tab mới.
-4. **Nạp dữ liệu mẫu.** Khi schema chạy thành công, mở `database/seed.sql` và nhấn **F5**. Có thể chạy lại seed trên DB phát triển đã có bảng. [Hướng dẫn Query Tool của pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/query_tool_toolbar.html)
-5. **Kiểm tra dữ liệu.** Chạy truy vấn sau trong Query Tool. Tab **Data Output** phải có bốn tỉnh Lai Châu, Điện Biên, Sơn La và Yên Bái.
+2. **Tạo database.** Nhấp phải **Databases → Create → Database…**, nhập `landslide_webgis`, chọn **Owner** là `landslide_owner`, rồi **Save**. Nếu DB đã có, mở DB đó.
+3. **Bật PostGIS.** Nhấp phải **landslide_webgis → Query Tool** và chạy khối SQL bên dưới bằng **F5**. Nếu PostgreSQL báo `extension "postgis" is not available`, cài gói PostGIS khớp với phiên bản PostgreSQL trên máy chủ rồi chạy lại.
+
+   ```sql
+   CREATE EXTENSION IF NOT EXISTS postgis;
+   SELECT current_database(), current_user, postgis_version();
+   ```
+
+5. **Chạy schema rồi nạp seed.** Kiểm tra kết quả bước 4 hiển thị `landslide_webgis`, `landslide_owner` và phiên bản PostGIS. Trên DB trống, trong **cùng tab Query Tool**, dùng **Open File** (`Ctrl+O`) mở `database/schema.sql` rồi nhấn **F5** để chạy toàn bộ file. Khi tab **Messages** báo thành công, mở `database/seed.sql` và chạy tương tự. [Hướng dẫn Query Tool của pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/query_tool_toolbar.html)
+6. **Kiểm tra dữ liệu.** Chạy truy vấn sau trong Query Tool. Tab **Data Output** phải có bốn tỉnh Lai Châu, Điện Biên, Sơn La và Yên Bái.
 
    ```sql
    SELECT name FROM study_areas WHERE area_type = 'province' ORDER BY name;
    ```
 
-Để chạy Pytest, lặp lại bước 2–5 với tên DB `landslide_webgis_test`. Sau đó cấu hình backend theo [README backend](../backend/README.md).
+Để chạy Pytest, lặp lại bước 3–6 với tên DB `landslide_webgis_test`. Sau đó cấu hình backend theo [README backend](../backend/README.md).
 
 ## 1. Tạo role và database
 
@@ -34,7 +40,7 @@ psql -X -U postgres -d postgres -c "SELECT default_version FROM pg_available_ext
 
 Nếu truy vấn đầu trả 0 dòng, cài gói PostGIS cho đúng phiên bản PostgreSQL đang chạy trên Windows (ví dụ PostgreSQL 18), rồi chạy lại đến khi thấy số phiên bản PostGIS. Nếu truy vấn thứ hai trả 0 dòng, tạo DB bằng lệnh `createdb` bên dưới. Với DB đã có, bỏ qua lệnh `createdb`.
 
-Các lệnh PowerShell dưới đây dành cho cách tách role sở hữu bảng và role chỉ đọc. Khi chạy cả schema và seed bằng `postgres` như hướng dẫn pgAdmin ở trên, hai role này là tùy chọn.
+Trên PostgreSQL mới, tạo hai role một lần. `--pwprompt` yêu cầu nhập mật khẩu cho role mới. Schema cấp quyền đọc cho `landslide_user`, nên role này cần tồn tại cả khi dùng `postgres` để chạy API trên máy cá nhân.
 
 ```powershell
 createuser -U postgres --login --pwprompt landslide_owner
