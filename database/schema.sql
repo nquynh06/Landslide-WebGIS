@@ -1,4 +1,4 @@
--- Baseline 0001. Run as landslide_owner after bootstrap.sql.
+-- Baseline 0001. Run as landslide_owner after enabling PostGIS (see README.md).
 BEGIN;
 CREATE TABLE study_areas (
     id BIGSERIAL PRIMARY KEY,
